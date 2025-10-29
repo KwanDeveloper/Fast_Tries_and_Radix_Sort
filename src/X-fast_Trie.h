@@ -96,6 +96,56 @@ class XFastTrie{
 			return true;
         }
 
+		// Patched by Kwan
+		// bool remove(const size_t& key) {
+		// 	iter_lowest_level it = lowest_level.find(key);
+		// 	if(it == lowest_level.end()) return false;
+		//
+		// 	size_t succ = lowest_level.next_key(key, NULL_KEY);
+		// 	size_t pred = lowest_level.prev_key(key, NULL_KEY);
+		//
+		// 	lowest_level.remove(key);
+		// 	if(lowest_level.empty()){
+		// 		for(size_t i = 0; i < upper_levels.size(); i++) upper_levels[i].clear();
+		// 		return true;
+		// 	}
+		//
+		// 	for(size_t i = 0; i < bit_count - 1; i++){
+		// 		size_t ancestor_level = (bit_count - 2 - i);
+		// 		size_t ancestor_key = key >> (bit_count - 1 - ancestor_level);
+		// 		iter_upper_levels ancestor_node = upper_levels[ancestor_level].find(ancestor_key);
+		// 		size_t left_child_key = ancestor_key << 1;
+		// 		size_t right_child_key = (ancestor_key << 1) + 1;
+		// 		bool has_left_child;
+		// 		bool has_right_child;
+		//
+		// 		if(ancestor_level == bit_count - 2){
+		// 			if(key == left_child_key){
+		// 				has_left_child = false;
+		// 				has_right_child = lowest_level.contains(right_child_key);
+		// 			}else{
+		// 				has_left_child = lowest_level.contains(left_child_key);
+		// 				has_right_child = false;
+		// 			}
+		// 		}else{
+		// 			has_left_child = upper_levels[ancestor_level + 1].contains(left_child_key);
+		// 			has_right_child = upper_levels[ancestor_level + 1].contains(right_child_key);
+		// 		}
+		//
+		// 		if(has_left_child && has_right_child){
+		// 			ancestor_node->second = NULL_KEY;
+		// 			return true;
+		// 		}else if(!has_left_child && !has_right_child){
+		// 			upper_levels[ancestor_level].erase(ancestor_key);
+		// 		}else if(!has_left_child){
+		// 			ancestor_node->second = succ;
+		// 		}else{
+		// 			ancestor_node->second = pred;
+		// 		}
+		// 	}
+		// 	return true;
+		// }
+
 		bool remove(const size_t& key){
 			iter_lowest_level node2remove = lowest_level.find(key);
 			if(node2remove == lowest_level.end()){
